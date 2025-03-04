@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Exclude Method Suite" verbose="1">
+    <test name="Exclude Method Test">
+        <classes>
+            <class name="firstpackage.FirstClass">
+                <methods>
+                    <exclude name="firstTest" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

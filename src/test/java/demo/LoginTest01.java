@@ -1,9 +1,14 @@
+package demo;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class LoginTest01 {
     public void sleepInSecond(long timeout) {
@@ -16,6 +21,9 @@ public class LoginTest01 {
     }
     // khai bao driver
     WebDriver driver;
+    WebDriverWait wait;
+    String projectPath = System.getProperty("user.dir");
+
 
     //Lay xpath
     By txtUsername = By.xpath("//input[@id='user-name']");
@@ -28,8 +36,12 @@ public class LoginTest01 {
 
     @BeforeMethod
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", projectPath + "/src/browserDriver/chromedriver.exe");
         driver = new ChromeDriver();
+//        wait = new WebDriverWait(driver, 10);
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Sử dụng Duration.ofSeconds
+
         driver.manage().window().maximize();
     }
 

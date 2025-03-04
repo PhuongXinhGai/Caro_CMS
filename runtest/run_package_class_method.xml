@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Combine Suite" verbose="1">
+    <test name="Combine Test">
+        <packages>
+            <package name="org.example" />
+        </packages>
+        <classes>
+            <class name="demo.LoginTest01" />
+            <class name="demo.Login">
+                <methods>
+                    <include name="TC01_Login_successfully" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

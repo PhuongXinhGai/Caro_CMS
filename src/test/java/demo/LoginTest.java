@@ -1,3 +1,5 @@
+package demo;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -17,7 +19,7 @@ public class LoginTest {
     @Test
     public void testLoginSuccess() {
         driver.get("https://example.com");
-        System.out.println("Login thành công!");
+        System.out.println("Demo.Login thành công!");
     }
 
     @AfterMethod
