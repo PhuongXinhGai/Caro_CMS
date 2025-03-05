@@ -53,12 +53,34 @@ public class Login {
     public void TC01_Login_successfully(){
         driver.get("https://vngolf-portal.vnpaytest.vn/auth");
         sleepInSecond(2);
+
+//        Verify disbale btnLogin
+        boolean statusBtnLoginDisable = driver.findElement(btnLogin).isEnabled();
+        if (statusBtnLoginDisable == true){
+            System.out.println("Button Login is enable");
+        }
+        else {
+            System.out.println("Button Login is disable");
+        }
+
         driver.findElement(inputUsername).sendKeys(valueUsername);
         sleepInSecond(1);
         driver.findElement(inputPassword).sendKeys(valuePassword);
         sleepInSecond(1);
-        driver.findElement(btnLogin).click();
-        sleepInSecond(3);
+
+//      verify enable btnLogin
+        boolean statusBtnLoginEnable = driver.findElement(btnLogin).isEnabled();
+        if (statusBtnLoginEnable == true){
+            System.out.println("Button Login is enable");
+            driver.findElement(btnLogin).click();
+            sleepInSecond(3);
+        }
+        else {
+            System.out.println("Login failed because the Login button is disabled");
+        }
+
+
+
         driver.findElement(avt).click();
         sleepInSecond(1);
         driver.findElement(txtSignOut).click();
@@ -78,6 +100,10 @@ public class Login {
         };
 
         sleepInSecond(3);
+    }
+
+    public void TC02_Login_Fail() {
+
     }
 
     @AfterMethod
