@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
+
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -34,9 +36,17 @@ public class Login {
     By avt = By.xpath("//div[@id='kt_header_user_menu_toggle']");
     By txtSignOut = By.xpath("//a[contains(text(),'Sign Out')]");
     By btnComfirm = By.xpath("//button[@class='btn-sm mx-2 btn btn-primary']");
+
+    By alertText = By.xpath("//div[@class='alert-text font-weight-bold']");
+
 //Nhap gia tri
-    String valueUsername = "phuongtt-chilinh";
-    String valuePassword = "Golf@12345";
+    String valueUsernameCorrect = "phuongtt-chilinh";
+    String valuePasswordCorrect= "Golf@12345";
+
+    String valueUsernameWrong = "phuongtt";
+    String valuePasswordWrong = "Golf@12345";
+
+    String expectedText = "The login detail is incorrect";
 
     @BeforeMethod
     public void setUp(){
@@ -49,37 +59,26 @@ public class Login {
         driver.manage().window().maximize();
     }
 
-    @Test
+    @Test(priority = 1)
     public void TC01_Login_successfully(){
         driver.get("https://vngolf-portal.vnpaytest.vn/auth");
         sleepInSecond(2);
 
-//        Verify disbale btnLogin
-        boolean statusBtnLoginDisable = driver.findElement(btnLogin).isEnabled();
-        if (statusBtnLoginDisable == true){
-            System.out.println("Button Login is enable");
-        }
-        else {
-            System.out.println("Button Login is disable");
-        }
-
-        driver.findElement(inputUsername).sendKeys(valueUsername);
+        driver.findElement(inputUsername).sendKeys(valueUsernameCorrect);
         sleepInSecond(1);
-        driver.findElement(inputPassword).sendKeys(valuePassword);
+        driver.findElement(inputPassword).sendKeys(valuePasswordCorrect);
         sleepInSecond(1);
 
 //      verify enable btnLogin
         boolean statusBtnLoginEnable = driver.findElement(btnLogin).isEnabled();
         if (statusBtnLoginEnable == true){
             System.out.println("Button Login is enable");
-            driver.findElement(btnLogin).click();
-            sleepInSecond(3);
         }
         else {
             System.out.println("Login failed because the Login button is disabled");
         }
-
-
+        driver.findElement(btnLogin).click();
+        sleepInSecond(3);
 
         driver.findElement(avt).click();
         sleepInSecond(1);
@@ -102,8 +101,29 @@ public class Login {
         sleepInSecond(3);
     }
 
-    public void TC02_Login_Fail() {
+    @Test(priority = 2)
+    public void TC02_Login_Fail_InputUsernameWrong() {
+        driver.get("https://vngolf-portal.vnpaytest.vn/auth");
+        sleepInSecond(2);
 
+        driver.findElement(inputUsername).clear();
+        driver.findElement(inputUsername).sendKeys(valueUsernameWrong);
+        driver.findElement(inputPassword).clear();
+        driver.findElement(inputPassword).sendKeys(valuePasswordCorrect);
+
+        boolean statusBtnLoginEnable = driver.findElement(btnLogin).isEnabled();
+        if (statusBtnLoginEnable == true){
+            System.out.println("Button Login is enable");
+        }
+        else {
+            System.out.println("Login failed because the Login button is disabled");
+        }
+        driver.findElement(btnLogin).click();
+        sleepInSecond(3);
+
+        String bodyText = driver.findElement(alertText).getText();
+        System.out.println(bodyText);
+        Assert.assertEquals(expectedText, bodyText);
     }
 
     @AfterMethod

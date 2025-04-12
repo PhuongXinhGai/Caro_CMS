@@ -6,10 +6,10 @@
             <package name="org.example" />
         </packages>
         <classes>
-            <class name="demo.LoginTest01" />
+<!--            <class name="demo.LoginTest01" />-->
             <class name="demo.Login">
                 <methods>
-                    <include name="TC01_Login_successfully" />
+                    <include name="TC02_Login_Fail_InputUsernameWrong" />
                 </methods>
             </class>
         </classes>
